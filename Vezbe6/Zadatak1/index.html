@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title>Vezbe 6 - Zadatak 1</title>
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="styles/css/style.css"/>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<script src="app.js" type="text/javascript"></script>
+		<script src="studenti.service.js" type="text/javascript"></script>
+		<script src="mycontroller.js" type="text/javascript"></script>
+	</head>
+	<body ng-app='MyApp'>
+
+		<!-- NAVIGATION -->
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" ui-sref="#">Uvod u Angular.js</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a ui-sref="students">Studenti</a></li>
+				<li><a ui-sref="teachers">Nastavnici</a></li>
+			</ul>
+		</nav>
+
+		<div class="col-md-12" ng-controller="StudentController as studentCtrl">
+			<!--INPUT FORM -->
+			<div class="student-form col-md-6">
+				<h1>FORMA</h1>
+				<span>
+					<label>Ime: </label>
+					<input type="text" ng-model="studentCtrl.student.ime"/>
+				</span>
+				<span>
+					<label>Prezime: </label>
+					<input type="text" ng-model="studentCtrl.student.prezime"/>
+				</span>
+				<span>
+					<label>Fakultet: </label>
+					<input type="text" ng-model="studentCtrl.student.fakultet"/>
+				</span>
+				<span>
+					<label>Index: </label>
+					<input type="number" ng-model="studentCtrl.student.index"/>
+				</span>
+				<span>
+					<label>Prosek ocena: </label>
+					<input type="number" ng-model="studentCtrl.student.prosek"/>
+				</span>
+				<span>
+					<label>Godina upisa: </label>
+					<input type="number" ng-model="studentCtrl.student.godinaUpisa"/>
+				</span>
+				<button class="btn btn-success" ng-click="studentCtrl.dodajStudenta()">Dodaj studenta</button>
+				<button class="btn btn-default" ng-click="studentCtrl.updateStudent()">Izmeni studenta</button>
+			</div>
+
+			<!--TABLE -->
+			<div class="col-md-6">
+				<h1>TABELA</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>Ime</td>
+							<td>Fakultet</td>
+							<td>Indeks</td>
+							<td>Prosek</td>
+							<td>Godina upisa</td>
+							<td>Kontrole</td>
+						</tr>
+					</thead>
+					<tr ng-repeat="std in studentCtrl.studenti" ng-class="{'manji-prosek': std.prosek < 8}">
+						<td>{{std.ime}}</td>
+						<td>{{std.fakultet}}</td>
+						<td>{{std.index}}</td>
+						<td>{{std.prosek}}</td>
+						<td>{{std.godinaUpisa}}</td>
+						<td>
+							<button ng-click="studentCtrl.obrisiStudenta($index)">Obrisi</button>
+							<!-- BONUS - ZA DOMACI -->
+							<button ng-click="studentCtrl.addStudentDataToEditForm($index)" ng-disabled="{{std.godinaUpisa < 2009}}">Edit</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
